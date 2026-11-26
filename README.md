@@ -37,11 +37,6 @@ Java 17, Spring Boot 3, Spring MVC, Spring Data JPA (Hibernate 6), MySQL, Thymel
 
 ## Screenshots
 
-### Books
-![Books](screenshots/books.png)
-
-### Members
-![Members](screenshots/members.png)
-
-### Issue / Return with Late Fine
-![Issue Return and Late Fine](screenshots/issue-return-fine.png)
+![Books](Books.png)
+![Members](Members.png)
+![Issue Return and Late Fine](Issue,Return%20&%20Fine.png)
