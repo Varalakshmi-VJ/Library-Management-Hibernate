@@ -36,4 +36,12 @@ Java 17, Spring Boot 3, Spring MVC, Spring Data JPA (Hibernate 6), MySQL, Thymel
 3. Open http://localhost:8082 - the `library_db` database and sample data are created automatically.
 
 ## Screenshots
-_Add screenshots here._
+
+### Books
+![Books](screenshots/books.png)
+
+### Members
+![Members](screenshots/members.png)
+
+### Issue / Return with Late Fine
+![Issue Return and Late Fine](screenshots/issue-return-fine.png)
