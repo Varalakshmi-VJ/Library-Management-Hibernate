@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Members')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav(${active})}"></nav>
+<div class="container">
+  <div th:replace="~{fragments :: flash}"></div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Members</h3>
+    <a class="btn btn-primary" href="/members/new">+ Add Member</a>
+  </div>
+  <table class="table table-bordered bg-white">
+    <thead class="table-light"><tr><th>Name</th><th>Email</th><th>Books currently issued</th></tr></thead>
+    <tbody>
+      <tr th:each="m : ${members}">
+        <td th:text="${m.name}"></td>
+        <td th:text="${m.email}"></td>
+        <td th:text="${m.activeIssueCount}"></td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(members)}"><td colspan="3" class="text-center text-muted">No members yet</td></tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Issue / Return')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav(${active})}"></nav>
+<div class="container">
+  <div th:replace="~{fragments :: flash}"></div>
+
+  <div class="card card-body mb-4">
+    <h5>Issue a book</h5>
+    <form class="row g-2" method="post" action="/issues/issue">
+      <div class="col-md-5">
+        <select class="form-select" name="bookId" required>
+          <option value="">Select book</option>
+          <option th:each="b : ${books}" th:value="${b.id}" th:text="${b.title} + ' (' + ${b.availableCopies} + ' left)'"></option>
+        </select></div>
+      <div class="col-md-4">
+        <select class="form-select" name="memberId" required>
+          <option value="">Select member</option>
+          <option th:each="m : ${members}" th:value="${m.id}" th:text="${m.name}"></option>
+        </select></div>
+      <div class="col-md-3"><button class="btn btn-primary w-100">Issue</button></div>
+    </form>
+    <small class="text-muted mt-2" th:text="'Loan period: ' + ${loanDays} + ' days. Late fine: Rs. ' + ${finePerDay} + ' per day. Max 3 books per member.'"></small>
+  </div>
+
+  <h5>Issue history</h5>
+  <table class="table table-bordered bg-white align-middle">
+    <thead class="table-light">
+      <tr><th>Book</th><th>Member</th><th>Issued</th><th>Due</th><th>Returned</th><th>Fine</th><th></th></tr>
+    </thead>
+    <tbody>
+      <tr th:each="i : ${issues.content}" th:classappend="${i.overdue} ? 'table-warning'">
+        <td th:text="${i.book.title}"></td>
+        <td th:text="${i.member.name}"></td>
+        <td th:text="${i.issueDate}"></td>
+        <td><span th:text="${i.dueDate}"></span> <span class="badge text-bg-danger" th:if="${i.overdue}">Overdue</span></td>
+        <td th:text="${i.returnDate != null} ? ${i.returnDate} : '-'"></td>
+        <td th:text="${i.fine > 0} ? 'Rs. ' + ${i.fine} : '-'"></td>
+        <td>
+          <form th:if="${i.returnDate == null}" method="post" th:action="@{/issues/return/{id}(id=${i.id})}">
+            <button class="btn btn-sm btn-success">Return</button>
+          </form>
+        </td>
+      </tr>
+      <tr th:if="${issues.empty}"><td colspan="7" class="text-center text-muted">No books issued yet</td></tr>
+    </tbody>
+  </table>
+  <nav th:if="${issues.totalPages > 1}">
+    <ul class="pagination">
+      <li class="page-item" th:classappend="${issues.first} ? 'disabled'"><a class="page-link" th:href="@{/issues(page=${issues.number - 1})}">Previous</a></li>
+      <li class="page-item" th:classappend="${issues.last} ? 'disabled'"><a class="page-link" th:href="@{/issues(page=${issues.number + 1})}">Next</a></li>
+    </ul>
+  </nav>
+</div>
+</body>
+</html>
